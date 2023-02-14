@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasks_app/models/task.dart';
+import './widgets/user_input.dart';
 
+import '../bloc/bloc_exports.dart';
 import '../widgets/task_list.dart';
 
 class TasksScreen extends StatelessWidget {
-  TasksScreen({Key? key}) : super(key: key);
-
-  List<Task> taskList = [Task(title: 'task1'), Task(title: 'task2'), Task(title: 'task3')];
+  const TasksScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +20,26 @@ class TasksScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Center(
-            child: Chip(
-              label: Text(
-                'Tasks:',
+      body: BlocBuilder<TasksBloc, TasksState>(
+        builder: (context, state) {
+          List<Task> taskList = state.allTasks; //state change -> rebuild
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Center(
+                child: Chip(
+                  label: Text(
+                    'Tasks:',
+                  ),
+                ),
               ),
-            ),
-          ),
-          TaskList(taskList: taskList)
-        ],
+              TaskList(taskList: taskList)
+            ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => UserInput().addTask(context),
         tooltip: 'Add Task',
         child: const Icon(Icons.add),
       ),
