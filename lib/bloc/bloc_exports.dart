@@ -1,3 +1,2 @@
-library bloc_exports;
-
-export 'package:flutter_tasks_app/bloc/bloc/tasks_bloc.dart';
+export './bloc/tasks_bloc.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
