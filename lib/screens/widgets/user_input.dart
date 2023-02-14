@@ -9,30 +9,24 @@ class UserInput {
   static final _userInput = UserInput._internal();
   UserInput._internal();
 
-  TextEditingController titleCon = TextEditingController();
-
   void addTask(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (context) => SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskWidget(titleCon: titleCon),
+                child: const AddTaskWidget(),
               ), //viewInsets.bottom 是取得底部的留白區域
             ));
   }
 }
 
 class AddTaskWidget extends StatelessWidget {
-  const AddTaskWidget({
-    Key? key,
-    required this.titleCon,
-  }) : super(key: key);
-
-  final TextEditingController titleCon;
+  const AddTaskWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController titleCon = TextEditingController();
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -55,7 +49,6 @@ class AddTaskWidget extends StatelessWidget {
                   onPressed: () {
                     final task = Task(title: titleCon.text);
                     BlocProvider.of<TasksBloc>(context).add(AddTask(task: task));
-                    titleCon.clear();
                     Navigator.pop(context);
                     //也可執行 context.read<TasksBloc>().add(AddTask(task: task))則是使用BuildContext來讀取和操作Bloc物件
                   },
