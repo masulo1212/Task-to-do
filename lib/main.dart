@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasks_app/bloc/bloc_exports.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'screens/tasks_screen.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TasksBloc>(
       create: (context) => TasksBloc(), //初始化
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Tasks App',
         theme: ThemeData(

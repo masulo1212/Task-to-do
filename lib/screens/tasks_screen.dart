@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasks_app/models/task.dart';
+import 'package:flutter_tasks_app/screens/mydrawer.dart';
 import './widgets/user_input.dart';
 
 import '../bloc/bloc_exports.dart';
@@ -23,12 +24,13 @@ class TasksScreen extends StatelessWidget {
               )
             ],
           ),
+          drawer: const MyDrawer(),
           body: Column(
             children: [
-              const Center(
+              Center(
                 child: Chip(
                   label: Text(
-                    'Tasks:',
+                    '${state.allTasks.length} Tasks',
                   ),
                 ),
               ),

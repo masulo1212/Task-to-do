@@ -5,26 +5,31 @@ part of 'tasks_bloc.dart';
 
 class TasksState extends Equatable {
   final List<Task> allTasks;
-  const TasksState({this.allTasks = const <Task>[]});
+  final List<Task> removeTasks;
+  const TasksState({this.allTasks = const <Task>[], this.removeTasks = const <Task>[]});
 
   @override
-  List<Object> get props => [allTasks];
+  List<Object> get props => [allTasks, removeTasks];
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'allTasks': allTasks.map((x) => x.toMap()).toList(),
+      'removeTasks': removeTasks.map((x) => x.toMap()).toList(),
     };
   }
 
   factory TasksState.fromMap(Map<String, dynamic> map) {
     return TasksState(
-      allTasks: List<Task>.from(
-        //注意這裡的dynamic -> 原本自動生成是int
-        (map['allTasks'] as List<dynamic>).map<Task>(
+        allTasks: List<Task>.from(
+            //注意這裡的dynamic -> 原本自動生成是int
+            (map['allTasks'] as List<dynamic>).map<Task>(
           (x) => Task.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
+        )),
+        removeTasks: List<Task>.from(
+            //注意這裡的dynamic -> 原本自動生成是int
+            (map['removeTasks'] as List<dynamic>).map<Task>(
+          (x) => Task.fromMap(x as Map<String, dynamic>),
+        )));
   }
 }
 //只寫TasksState()，flutter就會自動幫我設定allTasks是空的list

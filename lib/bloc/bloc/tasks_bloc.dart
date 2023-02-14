@@ -11,12 +11,13 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
     on<DeleteTask>(_onDeleteTask);
+    on<RemoveTask>(_onRemoveTask);
   }
 
   //event handler
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {
     final state = this.state;
-    emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
+    emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task), removeTasks: state.removeTasks));
 
     //allTasks 的值是由當前 state 的 allTasks 複製一份出來，再加上一個新的 task。
     //不是同一個實例，每次傳遞 TasksState 物件給外面時，都是傳遞的新的物件，而不是之前的物件。每次觸發emit事件後，state就會被替換為新的TasksState實例。
@@ -31,14 +32,29 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     task.isDone == false
         ? allTasks.insert(index, task.copyWith(isDone: true))
         : allTasks.insert(index, task.copyWith(isDone: false));
-    emit(TasksState(allTasks: allTasks));
+    emit(TasksState(allTasks: allTasks, removeTasks: state.removeTasks));
   }
 
+  //完全刪除
   void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) {
     final state = this.state;
     final task = event.task;
-    List<Task> allTasks = List.from(state.allTasks)..remove(task);
-    emit(TasksState(allTasks: allTasks));
+
+    emit(TasksState(
+      allTasks: List.from(state.allTasks), //主頁task數量不變
+      removeTasks: List.from(state.removeTasks)..remove(task), //從bin永久刪除
+    ));
+  }
+
+  //remove 放到bin
+  void _onRemoveTask(RemoveTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    final task = event.task;
+
+    emit(TasksState(
+      allTasks: List.from(state.allTasks)..remove(task),
+      removeTasks: List.from(state.removeTasks)..add(task.copyWith(isDelete: true)),
+    ));
   }
 
   @override
