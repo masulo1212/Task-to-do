@@ -10,21 +10,20 @@ class TasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tasks App'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
-      body: BlocBuilder<TasksBloc, TasksState>(
-        builder: (context, state) {
-          List<Task> taskList = state.allTasks; //state change -> rebuild
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) {
+        List<Task> taskList = state.allTasks; //state change -> rebuild
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Tasks App'),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+              )
+            ],
+          ),
+          body: Column(
             children: [
               const Center(
                 child: Chip(
@@ -35,14 +34,14 @@ class TasksScreen extends StatelessWidget {
               ),
               TaskList(taskList: taskList)
             ],
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => UserInput().addTask(context),
-        tooltip: 'Add Task',
-        child: const Icon(Icons.add),
-      ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => UserInput().addTask(context),
+            tooltip: 'Add Task',
+            child: const Icon(Icons.add),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasks_app/bloc/bloc_exports.dart';
+import 'package:flutter_tasks_app/utils/uuid.dart';
 
 import '../../models/task.dart';
 
@@ -47,8 +48,9 @@ class AddTaskWidget extends StatelessWidget {
               TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
               ElevatedButton(
                   onPressed: () {
-                    final task = Task(title: titleCon.text);
-                    BlocProvider.of<TasksBloc>(context).add(AddTask(task: task));
+                    final task = Task(title: titleCon.text, id: GenId.genUuid());
+                    context.read<TasksBloc>().add(AddTask(task: task));
+                    // BlocProvider.of<TasksBloc>(context).add(AddTask(task: task));
                     Navigator.pop(context);
                     //也可執行 context.read<TasksBloc>().add(AddTask(task: task))則是使用BuildContext來讀取和操作Bloc物件
                   },

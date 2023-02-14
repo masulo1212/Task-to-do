@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tasks_app/bloc/bloc_exports.dart';
+import 'package:flutter_tasks_app/widgets/task_tile.dart';
 
 import '../models/task.dart';
 
@@ -18,15 +18,7 @@ class TaskList extends StatelessWidget {
           itemCount: taskList.length,
           itemBuilder: (context, index) {
             final task = taskList[index];
-            return ListTile(
-              title: Text(task.title),
-              trailing: Checkbox(
-                  value: task.isDone,
-                  onChanged: (val) {
-                    BlocProvider.of<TasksBloc>(context).add(UpdateTask(task: task));
-                  }),
-              onLongPress: () => BlocProvider.of<TasksBloc>(context).add(DeleteTask(task: task)),
-            );
+            return TaskTile(task: task);
           }),
     );
   }

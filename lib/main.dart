@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasks_app/bloc/bloc_exports.dart';
+import 'package:path_provider/path_provider.dart';
 import 'screens/tasks_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //得到本機路徑並初始化hydrated bloc storage
+  final storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
+  HydratedBlocOverrides.runZoned(() => runApp(const MyApp()), storage: storage);
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<TasksBloc>(
       create: (context) => TasksBloc(), //初始化
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
