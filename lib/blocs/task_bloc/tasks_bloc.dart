@@ -17,7 +17,12 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   //event handler
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {
     final state = this.state;
-    emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task), removeTasks: state.removeTasks));
+    emit(TasksState(
+      pendingTasks: List.from(state.pendingTasks)..add(event.task),
+      completeTasks: state.completeTasks,
+      favoriteTasks: state.favoriteTasks,
+      removeTasks: state.removeTasks,
+    ));
 
     //allTasks 的值是由當前 state 的 allTasks 複製一份出來，再加上一個新的 task。
     //不是同一個實例，每次傳遞 TasksState 物件給外面時，都是傳遞的新的物件，而不是之前的物件。每次觸發emit事件後，state就會被替換為新的TasksState實例。
@@ -26,13 +31,24 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {
     final state = this.state;
     final task = event.task;
-    final index = state.allTasks.indexOf(task); // 為了處理點擊checkbox 會移動位置的問題
-    List<Task> allTasks = List.from(state.allTasks)..remove(task); //把舊的task先刪掉
-    //更新isDone狀態 再加回去list
+
+    List<Task> pendingTasks = state.pendingTasks;
+    List<Task> completeTasks = state.completeTasks;
+    //如果完成 就加進complete list 且pending list要remove
     task.isDone == false
-        ? allTasks.insert(index, task.copyWith(isDone: true))
-        : allTasks.insert(index, task.copyWith(isDone: false));
-    emit(TasksState(allTasks: allTasks, removeTasks: state.removeTasks));
+        ? {
+            pendingTasks = List.from(state.pendingTasks)..remove(task),
+            completeTasks = List.from(state.completeTasks)..insert(0, task.copyWith(isDone: true))
+          }
+        : {
+            pendingTasks = List.from(state.pendingTasks)..insert(0, task.copyWith(isDone: false)),
+            completeTasks = List.from(state.completeTasks)..remove(task)
+          };
+    emit(TasksState(
+        pendingTasks: pendingTasks,
+        completeTasks: completeTasks,
+        favoriteTasks: state.favoriteTasks,
+        removeTasks: state.removeTasks));
   }
 
   //完全刪除
@@ -41,7 +57,9 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final task = event.task;
 
     emit(TasksState(
-      allTasks: List.from(state.allTasks), //主頁task數量不變
+      pendingTasks: List.from(state.pendingTasks), //主頁task數量不變
+      completeTasks: List.from(state.completeTasks), //主頁task數量不變
+      favoriteTasks: List.from(state.favoriteTasks), //主頁task數量不變
       removeTasks: List.from(state.removeTasks)..remove(task), //從bin永久刪除
     ));
   }
@@ -52,7 +70,9 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final task = event.task;
 
     emit(TasksState(
-      allTasks: List.from(state.allTasks)..remove(task),
+      pendingTasks: List.from(state.pendingTasks)..remove(task),
+      completeTasks: List.from(state.completeTasks)..remove(task),
+      favoriteTasks: List.from(state.favoriteTasks)..remove(task),
       removeTasks: List.from(state.removeTasks)..add(task.copyWith(isDelete: true)),
     ));
   }

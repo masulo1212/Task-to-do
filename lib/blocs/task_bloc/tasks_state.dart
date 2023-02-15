@@ -4,25 +4,44 @@ part of 'tasks_bloc.dart';
 //state類別繼承自Equatable時，會自動呼叫props函式
 
 class TasksState extends Equatable {
-  final List<Task> allTasks;
+  final List<Task> pendingTasks;
+  final List<Task> completeTasks;
+  final List<Task> favoriteTasks;
   final List<Task> removeTasks;
-  const TasksState({this.allTasks = const <Task>[], this.removeTasks = const <Task>[]});
+  const TasksState({
+    this.pendingTasks = const <Task>[],
+    this.completeTasks = const <Task>[],
+    this.favoriteTasks = const <Task>[],
+    this.removeTasks = const <Task>[],
+  });
 
   @override
-  List<Object> get props => [allTasks, removeTasks];
+  List<Object> get props => [pendingTasks, completeTasks, favoriteTasks, removeTasks];
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'allTasks': allTasks.map((x) => x.toMap()).toList(),
+      'pendingTasks': pendingTasks.map((x) => x.toMap()).toList(),
+      'completeTasks': completeTasks.map((x) => x.toMap()).toList(),
+      'favoriteTasks': favoriteTasks.map((x) => x.toMap()).toList(),
       'removeTasks': removeTasks.map((x) => x.toMap()).toList(),
     };
   }
 
   factory TasksState.fromMap(Map<String, dynamic> map) {
     return TasksState(
-        allTasks: List<Task>.from(
+        pendingTasks: List<Task>.from(
             //注意這裡的dynamic -> 原本自動生成是int
-            (map['allTasks'] as List<dynamic>).map<Task>(
+            (map['pendingTasks'] as List<dynamic>).map<Task>(
+          (x) => Task.fromMap(x as Map<String, dynamic>),
+        )),
+        completeTasks: List<Task>.from(
+            //注意這裡的dynamic -> 原本自動生成是int
+            (map['completeTasks'] as List<dynamic>).map<Task>(
+          (x) => Task.fromMap(x as Map<String, dynamic>),
+        )),
+        favoriteTasks: List<Task>.from(
+            //注意這裡的dynamic -> 原本自動生成是int
+            (map['favoriteTasks'] as List<dynamic>).map<Task>(
           (x) => Task.fromMap(x as Map<String, dynamic>),
         )),
         removeTasks: List<Task>.from(

@@ -12,6 +12,7 @@ class UserInput {
 
   void addTask(BuildContext context) {
     showModalBottomSheet(
+        isScrollControlled: true, //讓鍵盤不會檔到輸入框
         context: context,
         builder: (context) => SingleChildScrollView(
               child: Container(
@@ -28,6 +29,7 @@ class AddTaskWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController titleCon = TextEditingController();
+    TextEditingController desCon = TextEditingController();
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -37,18 +39,37 @@ class AddTaskWidget extends StatelessWidget {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          TextField(
-            autofocus: true,
-            controller: titleCon,
-            decoration: const InputDecoration(label: Text('title'), border: OutlineInputBorder()),
+
+          //標題
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: TextField(
+              autofocus: true,
+              controller: titleCon,
+              decoration: const InputDecoration(label: Text('title'), border: OutlineInputBorder()),
+            ),
           ),
+
+          //說明
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: TextField(
+              autofocus: true,
+              controller: desCon,
+              decoration: const InputDecoration(label: Text('description'), border: OutlineInputBorder()),
+              minLines: 3,
+              maxLines: 5,
+            ),
+          ),
+
+          //按鈕
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
               ElevatedButton(
                   onPressed: () {
-                    final task = Task(title: titleCon.text, id: GenId.genUuid());
+                    final task = Task(title: titleCon.text, description: desCon.text, id: GenId.genUuid());
                     context.read<TasksBloc>().add(AddTask(task: task));
                     // BlocProvider.of<TasksBloc>(context).add(AddTask(task: task));
                     Navigator.pop(context);

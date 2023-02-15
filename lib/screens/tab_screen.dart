@@ -42,7 +42,7 @@ class _TabScreenState extends State<TabScreen> with SingleTickerProviderStateMix
               ),
               Expanded(
                   child: TabBarView(
-                      controller: tabController, children: const [TasksScreen(), TaskComplete(), TaskFavorite()]))
+                      controller: tabController, children: const [TasksPending(), TaskComplete(), TaskFavorite()]))
             ],
           );
         },

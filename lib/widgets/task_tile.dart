@@ -23,6 +23,7 @@ class TaskTile extends StatelessWidget {
         title: Text(
           task.title,
           style: TextStyle(decoration: task.isDone! ? TextDecoration.lineThrough : null),
+          overflow: TextOverflow.ellipsis,
         ),
         trailing: Checkbox(
             value: task.isDone,
