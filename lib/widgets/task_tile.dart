@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../bloc/bloc_exports.dart';
+import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
 
 class TaskTile extends StatelessWidget {
