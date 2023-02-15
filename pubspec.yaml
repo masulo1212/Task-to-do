@@ -20,6 +20,7 @@ dependencies:
   uuid: ^3.0.7
   get:
   json_theme: ^5.0.0+2
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
