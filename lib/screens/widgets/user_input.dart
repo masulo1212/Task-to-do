@@ -69,7 +69,11 @@ class AddTaskWidget extends StatelessWidget {
               TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
               ElevatedButton(
                   onPressed: () {
-                    final task = Task(title: titleCon.text, description: desCon.text, id: GenId.genUuid());
+                    final task = Task(
+                        title: titleCon.text,
+                        description: desCon.text,
+                        id: GenId.genUuid(),
+                        date: DateTime.now().toString());
                     context.read<TasksBloc>().add(AddTask(task: task));
                     // BlocProvider.of<TasksBloc>(context).add(AddTask(task: task));
                     Navigator.pop(context);

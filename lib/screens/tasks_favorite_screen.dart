@@ -18,7 +18,7 @@ class TaskFavorite extends StatelessWidget {
               Center(
                 child: Chip(
                   label: Text(
-                    '${taskList.length} Tasks',
+                    '${taskList.length} Favorite',
                   ),
                 ),
               ),

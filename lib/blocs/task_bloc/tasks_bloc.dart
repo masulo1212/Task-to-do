@@ -12,6 +12,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<UpdateTask>(_onUpdateTask);
     on<DeleteTask>(_onDeleteTask);
     on<RemoveTask>(_onRemoveTask);
+    on<MarkFavTask>(_onMarkFavTask);
   }
 
   //event handler
@@ -75,6 +76,65 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       favoriteTasks: List.from(state.favoriteTasks)..remove(task),
       removeTasks: List.from(state.removeTasks)..add(task.copyWith(isDelete: true)),
     ));
+  }
+
+  //mark fav
+  void _onMarkFavTask(MarkFavTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    final task = event.task;
+    //fav會牽涉到pending & complete 的list-> 在pending or complete按下後會加入到fav list, 但原本的task也不會消失
+    List<Task> pendingTasks = state.pendingTasks;
+    List<Task> completeTasks = state.completeTasks;
+    List<Task> favoriteTasks = state.favoriteTasks;
+
+    //先處理pending list
+    if (task.isDone == false) {
+      if (task.isFavorite == false) {
+        //1. 在pending list更新bool fav
+        final index = pendingTasks.indexWhere((element) => element == task);
+        pendingTasks = List.from(state.pendingTasks)
+          ..remove(task)
+          ..insert(index, task.copyWith(isFavorite: true));
+
+        //2. 加入到fav list
+        favoriteTasks = List.from(state.favoriteTasks)..insert(0, task.copyWith(isFavorite: true));
+      } else {
+        //1. 在pending list更新bool fav
+        final index = pendingTasks.indexWhere((element) => element == task);
+        pendingTasks = List.from(state.pendingTasks)
+          ..remove(task)
+          ..insert(index, task.copyWith(isFavorite: false));
+
+        //2. 從fav list移除
+        favoriteTasks = List.from(state.favoriteTasks)..remove(task);
+      }
+    } else {
+      // complete list
+      if (task.isFavorite == false) {
+        //1. 在complete list更新bool fav
+        final index = completeTasks.indexWhere((element) => element == task);
+        completeTasks = List.from(state.completeTasks)
+          ..remove(task)
+          ..insert(index, task.copyWith(isFavorite: true));
+
+        //2. 加入到fav list
+        favoriteTasks = List.from(state.favoriteTasks)..insert(0, task.copyWith(isFavorite: true));
+      } else {
+        //1. 在completeTasks list更新bool fav
+        final index = completeTasks.indexWhere((element) => element == task);
+        completeTasks = List.from(state.completeTasks)
+          ..remove(task)
+          ..insert(index, task.copyWith(isFavorite: false));
+
+        //2. 從fav list移除
+        favoriteTasks = List.from(state.favoriteTasks)..remove(task);
+      }
+    }
+    emit(TasksState(
+        pendingTasks: pendingTasks,
+        completeTasks: completeTasks,
+        favoriteTasks: favoriteTasks,
+        removeTasks: state.removeTasks));
   }
 
   @override

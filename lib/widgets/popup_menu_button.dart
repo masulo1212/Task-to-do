@@ -4,11 +4,13 @@ import '../models/task.dart';
 
 class PopupButton extends StatelessWidget {
   final VoidCallback cancelOrDelete;
+  final VoidCallback likeOrDislike;
   final Task task;
   const PopupButton({
     Key? key,
     required this.cancelOrDelete,
     required this.task,
+    required this.likeOrDislike,
   }) : super(key: key);
 
   @override
@@ -20,23 +22,25 @@ class PopupButton extends StatelessWidget {
             (context) => [
                   PopupMenuItem(
                       child: TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.edit),
-                    label: const Text('Edit'),
-                  )),
+                        onPressed: null,
+                        icon: const Icon(Icons.edit),
+                        label: const Text('Edit'),
+                      ),
+                      onTap: () {}),
                   PopupMenuItem(
                       child: TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.bookmark),
-                    label: const Text('Add bookmark'),
-                  )),
+                        onPressed: null,
+                        icon: task.isFavorite == false ? const Icon(Icons.bookmark) : const Icon(Icons.bookmark_remove),
+                        label: task.isFavorite == false ? const Text('Add bookmark') : const Text('Remove bookmark'),
+                      ),
+                      onTap: likeOrDislike),
                   PopupMenuItem(
-                    child: TextButton.icon(
-                      onPressed: cancelOrDelete,
-                      icon: const Icon(Icons.delete),
-                      label: const Text('Delete'),
-                    ),
-                  )
+                      child: TextButton.icon(
+                        onPressed: null,
+                        icon: const Icon(Icons.delete),
+                        label: const Text('Delete'),
+                      ),
+                      onTap: cancelOrDelete)
                   // onTap: () => _removeOrDelete(context, task))
                 ]
             :
@@ -44,17 +48,18 @@ class PopupButton extends StatelessWidget {
             (context) => [
                   PopupMenuItem(
                       child: TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.restore_from_trash),
-                    label: const Text('Restore'),
-                  )),
+                        onPressed: null,
+                        icon: const Icon(Icons.restore_from_trash),
+                        label: const Text('Restore'),
+                      ),
+                      onTap: () {}),
                   PopupMenuItem(
-                    child: TextButton.icon(
-                      onPressed: cancelOrDelete,
-                      icon: const Icon(Icons.delete_forever),
-                      label: const Text('Delete Forever'),
-                    ),
-                  )
+                      child: TextButton.icon(
+                        onPressed: null,
+                        icon: const Icon(Icons.delete_forever),
+                        label: const Text('Delete Forever'),
+                      ),
+                      onTap: cancelOrDelete)
                 ]);
   }
 }
