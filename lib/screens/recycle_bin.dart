@@ -15,10 +15,16 @@ class RecycleBin extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Bin'),
             actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.add),
-              )
+              PopupMenuButton(
+                  icon: const Icon(Icons.more_vert),
+                  itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Row(
+                            children: const [Icon(Icons.delete_forever), SizedBox(width: 10), Text('Delete forever')],
+                          ),
+                          onTap: () => context.read<TasksBloc>().add(DeleteAllTask()),
+                        )
+                      ])
             ],
           ),
           drawer: const MyDrawer(),

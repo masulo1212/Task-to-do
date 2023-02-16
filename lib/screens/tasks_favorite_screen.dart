@@ -15,10 +15,13 @@ class TaskFavorite extends StatelessWidget {
         return Scaffold(
           body: Column(
             children: [
-              Center(
-                child: Chip(
-                  label: Text(
-                    '${taskList.length} Favorite',
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                  child: Chip(
+                    label: Text(
+                      '${taskList.length} Favorite',
+                    ),
                   ),
                 ),
               ),

@@ -19,15 +19,23 @@ class TaskList extends StatelessWidget {
           children: taskList
               .map((e) => ExpansionPanelRadio(
                     value: e.id, //唯一標誌符
-                    headerBuilder: (context, isOpen) => TaskTile(task: e),
+                    headerBuilder: (context, isOpen) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TaskTile(task: e),
+                    ),
                     //SelectableText讓user可以複製文字
                     //textspan可以讓文字格式化
-                    body: SelectableText.rich(TextSpan(children: [
-                      const TextSpan(text: 'Text:\n'),
-                      TextSpan(text: e.title),
-                      const TextSpan(text: '\n\nDescription:\n'),
-                      TextSpan(text: e.description),
-                    ])),
+                    body: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                        SelectableText.rich(TextSpan(children: [
+                          const TextSpan(text: 'Title:\n', style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: e.title),
+                          const TextSpan(text: '\n\nDescription:\n', style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: e.description),
+                        ])),
+                      ]),
+                    ),
                   ))
               .toList(),
         ),

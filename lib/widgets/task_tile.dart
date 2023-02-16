@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tasks_app/widgets/popup_menu_button.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
+import '../screens/widgets/user_input.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
@@ -17,6 +19,20 @@ class TaskTile extends StatelessWidget {
     task.isDelete!
         ? ctx.read<TasksBloc>().add(DeleteTask(task: task))
         : ctx.read<TasksBloc>().add(RemoveTask(task: task));
+  }
+
+  void _editTask(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true, //讓鍵盤不會檔到輸入框
+        context: context,
+        builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: EditTaskWidget(
+                  oldTask: task,
+                ),
+              ), //viewInsets.bottom 是取得底部的留白區域
+            ));
   }
 
   @override
@@ -66,6 +82,11 @@ class TaskTile extends StatelessWidget {
               task: task,
               cancelOrDelete: () => _removeOrDelete(context, task),
               likeOrDislike: () => context.read<TasksBloc>().add(MarkFavTask(task: task)),
+              editTask: () {
+                Get.back();
+                _editTask(context);
+              },
+              restoreTask: () => context.read<TasksBloc>().add(RestoreTask(task: task)),
             )
           ],
         ),

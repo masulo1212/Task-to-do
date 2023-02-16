@@ -13,6 +13,9 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<DeleteTask>(_onDeleteTask);
     on<RemoveTask>(_onRemoveTask);
     on<MarkFavTask>(_onMarkFavTask);
+    on<EditTask>(_onEditTask);
+    on<RestoreTask>(_onRestoreTask);
+    on<DeleteAllTask>(_onDeleteAllTask);
   }
 
   //event handler
@@ -35,20 +38,42 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 
     List<Task> pendingTasks = state.pendingTasks;
     List<Task> completeTasks = state.completeTasks;
+    List<Task> favTasks = state.favoriteTasks;
     //如果完成 就加進complete list 且pending list要remove
-    task.isDone == false
-        ? {
-            pendingTasks = List.from(state.pendingTasks)..remove(task),
-            completeTasks = List.from(state.completeTasks)..insert(0, task.copyWith(isDone: true))
-          }
-        : {
-            pendingTasks = List.from(state.pendingTasks)..insert(0, task.copyWith(isDone: false)),
-            completeTasks = List.from(state.completeTasks)..remove(task)
-          };
+
+    //如果有勾選
+    if (task.isDone == false) {
+      if (task.isFavorite == false) {
+        pendingTasks = List.from(state.pendingTasks)..remove(task);
+        completeTasks = List.from(state.completeTasks)..insert(0, task.copyWith(isDone: true));
+      } else {
+        final index = favTasks.indexOf(task);
+        pendingTasks = List.from(state.pendingTasks)..remove(task);
+        completeTasks = List.from(state.completeTasks)..insert(0, task.copyWith(isDone: true));
+        favTasks = List.from(state.favoriteTasks)
+          ..remove(task)
+          ..insert(index, task.copyWith(isDone: true));
+      }
+    } else {
+      //如果取消勾選 會移動回pending, complete就要刪除
+      if (task.isFavorite == false) {
+        pendingTasks = List.from(state.pendingTasks)..insert(0, task.copyWith(isDone: false));
+        completeTasks = List.from(state.completeTasks)..remove(task);
+      } else {
+        //如果取消勾選 會移動回pending, complete就要刪除, fav也要取消勾選
+        final index = favTasks.indexOf(task);
+        pendingTasks = List.from(state.pendingTasks)..insert(0, task.copyWith(isDone: false));
+        completeTasks = List.from(state.completeTasks)..remove(task);
+        favTasks = List.from(state.favoriteTasks)
+          ..remove(task)
+          ..insert(index, task.copyWith(isDone: false));
+      }
+    }
+
     emit(TasksState(
         pendingTasks: pendingTasks,
         completeTasks: completeTasks,
-        favoriteTasks: state.favoriteTasks,
+        favoriteTasks: favTasks,
         removeTasks: state.removeTasks));
   }
 
@@ -135,6 +160,50 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         completeTasks: completeTasks,
         favoriteTasks: favoriteTasks,
         removeTasks: state.removeTasks));
+  }
+
+  //邏輯：修改過的task會出現在pending, 而原本在complete的則會消失
+  void _onEditTask(EditTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    final oldTask = event.oldTask;
+    final newTask = event.newTask;
+
+    //原本在pending的task 會再次更新
+    //有修改的話也要一起更新fav list
+    List<Task> favList = state.favoriteTasks;
+    if (oldTask.isFavorite == true) {
+      favList
+        ..remove(oldTask)
+        ..insert(0, newTask);
+    }
+
+    emit(TasksState(
+        pendingTasks: List.from(state.pendingTasks)
+          ..remove(oldTask)
+          ..insert(0, newTask),
+        completeTasks: state.completeTasks..remove(oldTask),
+        favoriteTasks: favList,
+        removeTasks: state.removeTasks));
+  }
+
+  void _onRestoreTask(RestoreTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    final task = event.task;
+    emit(TasksState(
+        removeTasks: List.from(state.removeTasks)..remove(task),
+        pendingTasks: List.from(state.pendingTasks)
+          ..insert(0, task.copyWith(isDelete: false, isDone: false, isFavorite: false)),
+        completeTasks: state.completeTasks,
+        favoriteTasks: state.favoriteTasks));
+  }
+
+  void _onDeleteAllTask(DeleteAllTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    emit(TasksState(
+        removeTasks: List.from(state.removeTasks)..clear(),
+        pendingTasks: state.pendingTasks,
+        completeTasks: state.completeTasks,
+        favoriteTasks: state.favoriteTasks));
   }
 
   @override

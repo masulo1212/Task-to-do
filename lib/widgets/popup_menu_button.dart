@@ -5,41 +5,64 @@ import '../models/task.dart';
 class PopupButton extends StatelessWidget {
   final VoidCallback cancelOrDelete;
   final VoidCallback likeOrDislike;
+  final VoidCallback editTask;
+  final VoidCallback restoreTask;
+
   final Task task;
   const PopupButton({
     Key? key,
     required this.cancelOrDelete,
     required this.task,
     required this.likeOrDislike,
+    required this.editTask,
+    required this.restoreTask,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+        icon: const Icon(Icons.more_vert),
         itemBuilder: task.isDelete == false
             ?
             //三元運算
             (context) => [
                   PopupMenuItem(
-                      child: TextButton.icon(
-                        onPressed: null,
-                        icon: const Icon(Icons.edit),
-                        label: const Text('Edit'),
+                      child: GestureDetector(
+                    onTap: editTask, //較特殊 因為是modalsheet 必須透過此方式才能顯示
+                    behavior: HitTestBehavior.opaque, //讓點擊範圍變大
+                    child: Row(children: const [
+                      Icon(Icons.edit),
+                      SizedBox(
+                        width: 10,
                       ),
-                      onTap: () {}),
+                      Text('Edit')
+                    ]),
+                  )),
                   PopupMenuItem(
-                      child: TextButton.icon(
-                        onPressed: null,
-                        icon: task.isFavorite == false ? const Icon(Icons.bookmark) : const Icon(Icons.bookmark_remove),
-                        label: task.isFavorite == false ? const Text('Add bookmark') : const Text('Remove bookmark'),
-                      ),
+                      child: task.isFavorite == false
+                          ? Row(children: const [
+                              Icon(Icons.bookmark),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text('Add bookmark')
+                            ])
+                          : Row(children: const [
+                              Icon(Icons.bookmark_remove),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text('Remove bookmark')
+                            ]),
                       onTap: likeOrDislike),
                   PopupMenuItem(
-                      child: TextButton.icon(
-                        onPressed: null,
-                        icon: const Icon(Icons.delete),
-                        label: const Text('Delete'),
-                      ),
+                      child: Row(children: const [
+                        Icon(Icons.delete),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Delete')
+                      ]),
                       onTap: cancelOrDelete)
                   // onTap: () => _removeOrDelete(context, task))
                 ]
@@ -47,18 +70,22 @@ class PopupButton extends StatelessWidget {
             //三元運算
             (context) => [
                   PopupMenuItem(
-                      child: TextButton.icon(
-                        onPressed: null,
-                        icon: const Icon(Icons.restore_from_trash),
-                        label: const Text('Restore'),
-                      ),
-                      onTap: () {}),
+                      child: Row(children: const [
+                        Icon(Icons.restore_from_trash),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Restore')
+                      ]),
+                      onTap: restoreTask),
                   PopupMenuItem(
-                      child: TextButton.icon(
-                        onPressed: null,
-                        icon: const Icon(Icons.delete_forever),
-                        label: const Text('Delete Forever'),
-                      ),
+                      child: Row(children: const [
+                        Icon(Icons.delete_forever),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Delete Forever')
+                      ]),
                       onTap: cancelOrDelete)
                 ]);
   }
