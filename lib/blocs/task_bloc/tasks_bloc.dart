@@ -168,20 +168,44 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final oldTask = event.oldTask;
     final newTask = event.newTask;
 
-    //原本在pending的task 會再次更新
-    //有修改的話也要一起更新fav list
+    //原本在pending的task 會再次更新 - 有fav的也會更新 - 沒fav就不更新
+    //原本在complete的task 會移除，加在pending - 有fav的會更新 - 沒fav就不更新
     List<Task> favList = state.favoriteTasks;
-    if (oldTask.isFavorite == true) {
-      favList
-        ..remove(oldTask)
-        ..insert(0, newTask);
+    List<Task> pendingList = state.pendingTasks;
+    List<Task> completeList = state.completeTasks;
+
+    //pending
+    if (oldTask.isDone == false) {
+      if (oldTask.isFavorite == true) {
+        favList
+          ..remove(oldTask)
+          ..insert(0, newTask);
+        pendingList = List.from(state.pendingTasks)
+          ..remove(oldTask)
+          ..insert(0, newTask);
+      } else {
+        pendingList = List.from(state.pendingTasks)
+          ..remove(oldTask)
+          ..insert(0, newTask);
+      }
+
+      //complete
+    } else {
+      if (oldTask.isFavorite == true) {
+        favList
+          ..remove(oldTask)
+          ..insert(0, newTask);
+        completeList = List.from(state.completeTasks)..remove(oldTask);
+        pendingList = List.from(state.pendingTasks)..insert(0, newTask);
+      } else {
+        completeList = List.from(state.completeTasks)..remove(oldTask);
+        pendingList = List.from(state.pendingTasks)..insert(0, newTask);
+      }
     }
 
     emit(TasksState(
-        pendingTasks: List.from(state.pendingTasks)
-          ..remove(oldTask)
-          ..insert(0, newTask),
-        completeTasks: state.completeTasks..remove(oldTask),
+        pendingTasks: pendingList,
+        completeTasks: completeList,
         favoriteTasks: favList,
         removeTasks: state.removeTasks));
   }

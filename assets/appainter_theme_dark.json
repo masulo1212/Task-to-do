@@ -1,5 +1,5 @@
 {
-  "applyElevationOverlayColor": true,
+  "applyElevationOverlayColor": false,
   "backgroundColor": "#ff1a1c1e",
   "bottomAppBarColor": "#ff1a1c1e",
   "brightness": "dark",
@@ -144,151 +144,91 @@
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 16,
-      "inherit": false,
-      "letterSpacing": 0.5,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "bodyMedium": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 14,
-      "inherit": false,
-      "letterSpacing": 0.25,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "bodySmall": {
       "color": "#b3ffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 12,
-      "inherit": false,
-      "letterSpacing": 0.4,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "displayLarge": {
       "color": "#b3ffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w300",
-      "fontSize": 96,
-      "inherit": false,
-      "letterSpacing": -1.5,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "displayMedium": {
       "color": "#b3ffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w300",
-      "fontSize": 60,
-      "inherit": false,
-      "letterSpacing": -0.5,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "displaySmall": {
       "color": "#b3ffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 48,
-      "inherit": false,
-      "letterSpacing": 0,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "headlineLarge": {
       "color": "#b3ffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 40,
-      "inherit": false,
-      "letterSpacing": 0.25,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "headlineMedium": {
       "color": "#b3ffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 34,
-      "inherit": false,
-      "letterSpacing": 0.25,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "headlineSmall": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 24,
-      "inherit": false,
-      "letterSpacing": 0,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "labelLarge": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w500",
-      "fontSize": 14,
-      "inherit": false,
-      "letterSpacing": 1.25,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "labelMedium": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 11,
-      "inherit": false,
-      "letterSpacing": 1.5,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "labelSmall": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 10,
-      "inherit": false,
-      "letterSpacing": 1.5,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "titleLarge": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w500",
-      "fontSize": 20,
-      "inherit": false,
-      "letterSpacing": 0.15,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "titleMedium": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 16,
-      "inherit": false,
-      "letterSpacing": 0.15,
-      "textBaseline": "alphabetic"
+      "inherit": true
     },
     "titleSmall": {
       "color": "#ffffffff",
       "decoration": "none",
       "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w500",
-      "fontSize": 14,
-      "inherit": false,
-      "letterSpacing": 0.1,
-      "textBaseline": "alphabetic"
+      "inherit": true
     }
   },
   "scaffoldBackgroundColor": "#ff1a1c1e",
@@ -297,11 +237,26 @@
   "shadowColor": "#ff000000",
   "splashColor": "#40cccccc",
   "splashFactory": "splash",
+  "tabBarTheme": {
+    "labelStyle": {
+      "color": "#ffffffff",
+      "decoration": "none",
+      "fontFamily": "Roboto",
+      "fontWeight": "w400",
+      "fontSize": 16,
+      "inherit": false,
+      "letterSpacing": 0.5,
+      "textBaseline": "alphabetic"
+    }
+  },
   "textTheme": {
     "bodyLarge": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 16,
       "inherit": false,
@@ -309,9 +264,12 @@
       "textBaseline": "alphabetic"
     },
     "bodyMedium": {
-      "color": "#ffffffff",
+      "color": "#96f5f5f5",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 14,
       "inherit": false,
@@ -321,7 +279,10 @@
     "bodySmall": {
       "color": "#b3ffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 12,
       "inherit": false,
@@ -331,7 +292,10 @@
     "displayLarge": {
       "color": "#b3ffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_300",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w300",
       "fontSize": 96,
       "inherit": false,
@@ -341,7 +305,10 @@
     "displayMedium": {
       "color": "#b3ffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_300",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w300",
       "fontSize": 60,
       "inherit": false,
@@ -351,7 +318,10 @@
     "displaySmall": {
       "color": "#b3ffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 48,
       "inherit": false,
@@ -361,17 +331,19 @@
     "headlineLarge": {
       "color": "#b3ffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 40,
-      "inherit": false,
-      "letterSpacing": 0.25,
-      "textBaseline": "alphabetic"
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
+      "inherit": true
     },
     "headlineMedium": {
       "color": "#b3ffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 34,
       "inherit": false,
@@ -381,7 +353,10 @@
     "headlineSmall": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 24,
       "inherit": false,
@@ -391,7 +366,10 @@
     "labelLarge": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_500",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w500",
       "fontSize": 14,
       "inherit": false,
@@ -401,17 +379,19 @@
     "labelMedium": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
-      "fontWeight": "w400",
-      "fontSize": 11,
-      "inherit": false,
-      "letterSpacing": 1.5,
-      "textBaseline": "alphabetic"
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
+      "inherit": true
     },
     "labelSmall": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 10,
       "inherit": false,
@@ -421,7 +401,10 @@
     "titleLarge": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_500",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w500",
       "fontSize": 20,
       "inherit": false,
@@ -431,7 +414,10 @@
     "titleMedium": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_regular",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w400",
       "fontSize": 16,
       "inherit": false,
@@ -441,7 +427,10 @@
     "titleSmall": {
       "color": "#ffffffff",
       "decoration": "none",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Poppins_500",
+      "fontFamilyFallback": [
+        "Poppins"
+      ],
       "fontWeight": "w500",
       "fontSize": 14,
       "inherit": false,

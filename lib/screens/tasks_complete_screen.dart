@@ -20,7 +20,7 @@ class TaskComplete extends StatelessWidget {
                 child: Center(
                   child: Chip(
                     label: Text(
-                      '${taskList.length} Pending | ${state.completeTasks.length} Complete',
+                      '${state.pendingTasks.length} Waiting | ${taskList.length} Complete',
                     ),
                   ),
                 ),

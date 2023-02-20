@@ -13,10 +13,11 @@ class RecycleBin extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Bin'),
+            title: const Text('Recycle'),
             actions: [
               PopupMenuButton(
                   icon: const Icon(Icons.more_vert),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   itemBuilder: (context) => [
                         PopupMenuItem(
                           child: Row(
@@ -30,10 +31,13 @@ class RecycleBin extends StatelessWidget {
           drawer: const MyDrawer(),
           body: Column(
             children: [
-              Center(
-                child: Chip(
-                  label: Text(
-                    '${state.removeTasks.length} Tasks',
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                  child: Chip(
+                    label: Text(
+                      '${state.removeTasks.length} Tasks',
+                    ),
                   ),
                 ),
               ),

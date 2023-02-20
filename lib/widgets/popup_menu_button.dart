@@ -21,7 +21,11 @@ class PopupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-        icon: const Icon(Icons.more_vert),
+        icon: const Icon(
+          Icons.more_vert,
+          color: Colors.black54,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         itemBuilder: task.isDelete == false
             ?
             //三元運算

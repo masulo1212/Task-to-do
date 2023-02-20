@@ -16,6 +16,7 @@ class TaskList extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: ExpansionPanelList.radio(
+          elevation: 1,
           children: taskList
               .map((e) => ExpansionPanelRadio(
                     value: e.id, //唯一標誌符

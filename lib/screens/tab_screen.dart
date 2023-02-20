@@ -16,7 +16,7 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> with SingleTickerProviderStateMixin {
   TabController? tabController;
 
-  final List<Tab> tabs = [const Tab(text: 'Pending'), const Tab(text: 'Complete'), const Tab(text: 'Favorite')];
+  final List<Tab> tabs = [const Tab(text: 'Waiting'), const Tab(text: 'Complete'), const Tab(text: 'Favorite')];
 
   @override
   void initState() {

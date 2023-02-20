@@ -56,7 +56,11 @@ class TaskTile extends StatelessWidget {
                       style: TextStyle(decoration: task.isDone! ? TextDecoration.lineThrough : null),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(DateFormat().add_yMMMd().add_Hms().format(DateTime.parse(task.date)))
+                    const SizedBox(height: 10),
+                    Text(
+                      DateFormat().add_yMMMd().add_Hms().format(DateTime.parse(task.date)),
+                      style: const TextStyle(fontSize: 10, color: Colors.black54),
+                    )
                   ],
                 ),
               ),
@@ -64,7 +68,7 @@ class TaskTile extends StatelessWidget {
           ),
         ),
 
-        //圖片
+        //圖標
         Row(
           children: [
             Checkbox(
