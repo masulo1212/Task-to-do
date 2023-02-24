@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class Task extends Equatable {
@@ -43,15 +45,18 @@ class Task extends Equatable {
     );
   }
 
+  @override
+  List<Object?> get props => [title, description, id, date, isDone, isDelete, isFavorite];
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'title': title,
       'description': description,
       'id': id,
       'date': date,
-      'isDone': isDone,
-      'isDelete': isDelete,
-      'isFavorite': isFavorite,
+      'is_done': isDone,
+      'is_delete': isDelete,
+      'is_favorite': isFavorite,
     };
   }
 
@@ -61,12 +66,13 @@ class Task extends Equatable {
       description: map['description'] as String,
       id: map['id'] as String,
       date: map['date'] as String,
-      isDone: map['isDone'] != null ? map['isDone'] as bool : null,
-      isDelete: map['isDelete'] != null ? map['isDelete'] as bool : null,
-      isFavorite: map['isFavorite'] != null ? map['isFavorite'] as bool : null,
+      isDone: map['is_done'] != null ? map['is_done'] as bool : null,
+      isDelete: map['is_delete'] != null ? map['is_delete'] as bool : null,
+      isFavorite: map['is_favorite'] != null ? map['is_favorite'] as bool : null,
     );
   }
 
-  @override
-  List<Object?> get props => [title, description, id, date, isDone, isDelete, isFavorite];
+  String toJson() => json.encode(toMap());
+
+  factory Task.fromJson(String source) => Task.fromMap(json.decode(source) as Map<String, dynamic>);
 }

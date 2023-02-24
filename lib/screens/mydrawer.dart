@@ -46,7 +46,7 @@ class MyDrawer extends StatelessWidget {
             BlocBuilder<TasksBloc, TasksState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: () => Get.offAll(const RecycleBin()),
+                  onTap: () => Get.offAll(RecycleBin()),
                   child: ListTile(
                     leading: const Icon(Icons.delete),
                     title: const Text('Recycle'),

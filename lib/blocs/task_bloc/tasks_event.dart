@@ -66,3 +66,12 @@ class RestoreTask extends TasksEvent {
 }
 
 class DeleteAllTask extends TasksEvent {}
+
+//下拉刷新用
+class LoadPendingTask extends TasksEvent {}
+
+class LoadCompleteTask extends TasksEvent {}
+
+class LoadFavTask extends TasksEvent {}
+
+class LoadBinTask extends TasksEvent {}
